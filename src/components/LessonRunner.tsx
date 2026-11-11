@@ -33,7 +33,7 @@ function useExerciseDialog(onClose: () => void) {
       document.body.style.overflow = overflow;
       document.removeEventListener('keydown', trap);
       stopAudio();
-      previous?.focus();
+      previous?.focus({ preventScroll: true });
     };
   }, []);
   return container;
@@ -81,7 +81,7 @@ export function LessonRunner({ lesson, onClose, onComplete, sound, previouslyMas
   const isCorrect = selected === question?.answer;
   const earnedXp = practice ? score * 5 : score * 10 + (score / total >= 0.8 && !previouslyMastered ? 20 : 0);
 
-  useEffect(() => { container.current?.querySelector<HTMLElement>('h1')?.focus(); }, [phase, index]);
+  useEffect(() => { container.current?.querySelector<HTMLElement>('h1')?.focus({ preventScroll: true }); }, [phase, index]);
   useEffect(() => () => { listeningToken.current += 1; }, []);
 
   const checkAnswer = useCallback(() => {
@@ -209,7 +209,7 @@ export function NoteSprint({ onClose, onComplete, sound, clef = 'treble' }: {
   const completed = useRef(false);
   const container = useExerciseDialog(onClose);
 
-  useEffect(() => { container.current?.querySelector<HTMLElement>('h1')?.focus(); }, [phase]);
+  useEffect(() => { container.current?.querySelector<HTMLElement>('h1')?.focus({ preventScroll: true }); }, [phase]);
 
   useEffect(() => {
     if (phase !== 'running') return;
